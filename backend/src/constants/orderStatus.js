@@ -1,0 +1,14 @@
+// Requirement document padi strict workflow. Skip panna koodathu.
+exports.ORDER_STATUS = [
+  'PENDING', 'CONFIRMED', 'PROCESSING', 'SHIPPED', 'OUT_FOR_DELIVERY', 'DELIVERED', 'CANCELLED',
+];
+
+exports.ALLOWED_TRANSITIONS = {
+  PENDING: ['CONFIRMED', 'CANCELLED'],
+  CONFIRMED: ['PROCESSING', 'CANCELLED'],
+  PROCESSING: ['SHIPPED'],
+  SHIPPED: ['OUT_FOR_DELIVERY'],
+  OUT_FOR_DELIVERY: ['DELIVERED'],
+  DELIVERED: [],
+  CANCELLED: [],
+};
