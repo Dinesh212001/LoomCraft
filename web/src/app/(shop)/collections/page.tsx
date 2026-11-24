@@ -1,9 +1,7 @@
-
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useMemo, useState, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import {
   Search,
   SlidersHorizontal,
@@ -11,7 +9,8 @@ import {
   ChevronDown,
   RotateCcw,
 } from "lucide-react";
-import CardGrid from "../../../components/product/ProductCard";
+
+import ProductCardGrid from "@/components/product/ProductCard";
 
 const categories = [
   "Silk Sarees",
@@ -20,21 +19,13 @@ const categories = [
   "Dupattas",
   "Men's Veshti",
   "Blouse Materials",
+  "Blouse Designs",
+  "Men's Handloom",
 ];
 
-const fabrics = [
-  "Pure Silk",
-  "Cotton",
-  "Linen",
-  "Cotton Silk",
-  "Silk Blend",
-];
+const fabrics = ["Pure Silk", "Cotton", "Linen", "Cotton Silk", "Silk Blend"];
 
-const weavingTypes = [
-  "Traditional Handloom",
-  "Zari Weaving",
-  "Powerloom",
-];
+const weavingTypes = ["Traditional Handloom", "Zari Weaving", "Powerloom"];
 
 const colours = [
   { name: "Maroon", value: "#632d35" },
@@ -194,10 +185,172 @@ const products: Product[] = [
     newest: 1,
     popularity: 80,
   },
+  {
+    id: 7,
+    name: "Kancheepuram Silk Saree",
+    category: "Silk Sarees",
+    price: 14500,
+    image: "/images/antique-gold-magenta-kancheepuram-silk-saree.jpg",
+    description: "Gold body with magenta zari detailing.",
+    fabric: "Pure Silk",
+    weaving: "Zari Weaving",
+    colour: "Gold",
+    inStock: true,
+    newest: 7,
+    popularity: 90,
+  },
+  {
+    id: 8,
+    name: "Royal Maroon and Antique Gold Kanchipuram Silk Saree",
+    category: "Silk Sarees",
+    price: 14500,
+    image: "/images/kanchipuram-silk-model.jpg",
+    description:
+      "Celebrate timeless South Indian elegance with this magnificent Kanchipuram-inspired silk saree, featuring a lustrous antique-gold body, intricate traditional zari motifs and a rich maroon border. Ideal for weddings, festive celebrations, temple visits and special family occasions.",
+    fabric: "Pure Silk",
+    weaving: "Zari Weaving",
+    colour: "Maroon",
+    inStock: true,
+    newest: 8,
+    popularity: 96,
+  },
+  {
+    id: 9,
+    name: "Elegant Orange Cotton Saree with Pink Border",
+    category: "Cotton Sarees",
+    price: 6499,
+    image: "/images/elegant-orange-cotton-saree.jpg",
+    description:
+      "Vibrant orange body with elegant magenta border detailing and traditional woven motifs.",
+    fabric: "Cotton",
+    weaving: "Traditional Handloom",
+    colour: "Orange",
+    inStock: true,
+    newest: 9,
+    popularity: 92,
+  },
+  {
+    id: 10,
+    name: "Black and Orange Cotton Saree",
+    category: "Cotton Sarees",
+    price: 6499,
+    image: "/images/black-orange-cotton-saree.jpg",
+    description: "Black body with orange border and traditional leafy motifs.",
+    fabric: "Cotton",
+    weaving: "Traditional Handloom",
+    colour: "Black and Orange",
+    inStock: true,
+    newest: 10,
+    popularity: 10,
+  },
+  {
+    id: 11,
+    name: "Elegant Blue Linen Saree",
+    category: "Linen Sarees",
+    price: 6499,
+    image: "/images/blue-grey-linen-saree.jpg",
+    description:
+      "Blue body with silver-grey border and traditional gold motifs.",
+    fabric: "Linen",
+    weaving: "Traditional Motif Design",
+    colour: "Blue and Silver Grey",
+    inStock: true,
+    newest: 11,
+    popularity: 11,
+  },
+  {
+    id: 12,
+    name: "Navy Blue Floral Linen Saree",
+    category: "Linen Sarees",
+    price: 6999,
+    image: "/images/navy-blue-floral-linen-saree.jpg",
+    description:
+      "Navy blue body with orange floral prints and an elegant traditional border.",
+    fabric: "Linen",
+    weaving: "Traditional Floral Design",
+    colour: "Navy Blue and Orange",
+    inStock: true,
+    newest: 12,
+    popularity: 12,
+  },
+  {
+    id: 13,
+    name: "Ivory and Maroon Traditional Dupatta",
+    category: "Dupattas",
+    price: 2499,
+    image: "/images/ivory-maroon-traditional-dupatta.jpg",
+    description:
+      "Ivory body with intricate maroon patterns and a rich gold border.",
+    fabric: "Not Specified",
+    weaving: "Traditional Printed Design",
+    colour: "Ivory, Maroon and Gold",
+    inStock: true,
+    newest: 13,
+    popularity: 13,
+  },
+  {
+    id: 14,
+    name: "Teal Blue and Rust Traditional Dupatta",
+    category: "Dupattas",
+    price: 2499,
+    image: "/images/teal-rust-traditional-dupatta.jpg",
+    description:
+      "Teal blue body with rust-orange border, intricate motifs and decorative tassels.",
+    fabric: "Not Specified",
+    weaving: "Traditional Motif Design",
+    colour: "Teal Blue and Rust Orange",
+    inStock: true,
+    newest: 14,
+    popularity: 14,
+  },
+  {
+    id: 15,
+    name: "Magenta Radha Krishna Embroidered Blouse",
+    category: "Blouse Designs",
+    price: 4999,
+    image: "/images/magenta-radha-krishna-blouse.png",
+    description:
+      "Magenta blouse with intricate gold embroidery and Radha Krishna motifs.",
+    fabric: "Not Specified",
+    weaving: "Handcrafted Embroidery",
+    colour: "Magenta and Gold",
+    inStock: true,
+    newest: 15,
+    popularity: 15,
+  },
+  {
+    id: 16,
+    name: "Ivory Gold Traditional Men's Ethnic Wear",
+    category: "Men's Handloom",
+    price: 4999,
+    image: "/images/ivory-gold-mens-ethnic-wear.png",
+    description:
+      "Ivory outfit with elegant gold embroidery and a matching dhoti.",
+    fabric: "Not Specified",
+    weaving: "Traditional Embroidery",
+    colour: "Ivory and Gold",
+    inStock: true,
+    newest: 16,
+    popularity: 16,
+  },
+  {
+    id: 17,
+    name: "Ivory Gold Men's Traditional Silk Dhoti Set",
+    category: "Men's Handloom",
+    price: 5999,
+    image: "/images/ivory-gold-mens-silk-dhoti-set.png",
+    description:
+      "Ivory silk outfit with rich gold zari borders and an elegant traditional finish.",
+    fabric: "Silk",
+    weaving: "Traditional Zari Weaving",
+    colour: "Ivory and Gold",
+    inStock: true,
+    newest: 17,
+    popularity: 17,
+  },
 ];
 
-const formatPrice = (price: number) =>
-  `₹${price.toLocaleString("en-IN")}`;
+const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
 function CollectionsContent({
   initialCategory,
@@ -343,7 +496,7 @@ function CollectionsContent({
     children,
   }: {
     title: string;
-    children: React.ReactNode;
+    children: ReactNode;
   }) => (
     <div className="border-b border-[#eee5dc] py-5">
       <button
@@ -351,9 +504,7 @@ function CollectionsContent({
         onClick={() => toggleSection(title)}
         className="flex w-full items-center justify-between text-left"
       >
-        <span className="text-sm font-semibold text-[#351e23]">
-          {title}
-        </span>
+        <span className="text-sm font-semibold text-[#351e23]">{title}</span>
 
         <ChevronDown
           size={17}
@@ -398,11 +549,7 @@ function CollectionsContent({
             label={category}
             checked={selectedCategories.includes(category)}
             onChange={() =>
-              toggleFilter(
-                category,
-                selectedCategories,
-                setSelectedCategories
-              )
+              toggleFilter(category, selectedCategories, setSelectedCategories)
             }
           />
         ))}
@@ -439,49 +586,35 @@ function CollectionsContent({
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <div className="mb-2 flex justify-between text-xs text-gray-500">
-                <span>Minimum price</span>
-                <span>{formatPrice(minPrice)}</span>
-              </div>
+          <label className="block text-xs text-gray-500">
+            Minimum price
+            <input
+              type="range"
+              min={0}
+              max={50000}
+              step={500}
+              value={minPrice}
+              onChange={(e) =>
+                setMinPrice(Math.min(Number(e.target.value), maxPrice))
+              }
+              className="mt-2 w-full cursor-pointer accent-[#632d35]"
+            />
+          </label>
 
-              <input
-                type="range"
-                min={0}
-                max={50000}
-                step={500}
-                value={minPrice}
-                onChange={(e) =>
-                  setMinPrice(
-                    Math.min(Number(e.target.value), maxPrice)
-                  )
-                }
-                className="w-full cursor-pointer accent-[#632d35]"
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 flex justify-between text-xs text-gray-500">
-                <span>Maximum price</span>
-                <span>{formatPrice(maxPrice)}</span>
-              </div>
-
-              <input
-                type="range"
-                min={0}
-                max={50000}
-                step={500}
-                value={maxPrice}
-                onChange={(e) =>
-                  setMaxPrice(
-                    Math.max(Number(e.target.value), minPrice)
-                  )
-                }
-                className="w-full cursor-pointer accent-[#632d35]"
-              />
-            </div>
-          </div>
+          <label className="block text-xs text-gray-500">
+            Maximum price
+            <input
+              type="range"
+              min={0}
+              max={50000}
+              step={500}
+              value={maxPrice}
+              onChange={(e) =>
+                setMaxPrice(Math.max(Number(e.target.value), minPrice))
+              }
+              className="mt-2 w-full cursor-pointer accent-[#632d35]"
+            />
+          </label>
 
           <div className="flex justify-between text-[10px] text-gray-400">
             <span>₹0</span>
@@ -501,11 +634,7 @@ function CollectionsContent({
                 type="checkbox"
                 checked={selectedColours.includes(colour.name)}
                 onChange={() =>
-                  toggleFilter(
-                    colour.name,
-                    selectedColours,
-                    setSelectedColours
-                  )
+                  toggleFilter(colour.name, selectedColours, setSelectedColours)
                 }
                 className="h-3.5 w-3.5 accent-[#632d35]"
               />
@@ -528,11 +657,7 @@ function CollectionsContent({
             label={weaving}
             checked={selectedWeaving.includes(weaving)}
             onChange={() =>
-              toggleFilter(
-                weaving,
-                selectedWeaving,
-                setSelectedWeaving
-              )
+              toggleFilter(weaving, selectedWeaving, setSelectedWeaving)
             }
           />
         ))}
@@ -617,7 +742,6 @@ function CollectionsContent({
             >
               <SlidersHorizontal size={17} />
               Filters
-
               {activeFilterCount > 0 && (
                 <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#632d35] px-1 text-[10px] text-white">
                   {activeFilterCount}
@@ -653,11 +777,7 @@ function CollectionsContent({
             <div className="sticky top-24 border border-[#eee5dc] bg-white p-5">
               <div className="flex items-center justify-between border-b border-[#eee5dc] pb-5">
                 <div className="flex items-center gap-2">
-                  <SlidersHorizontal
-                    size={19}
-                    className="text-[#a77a43]"
-                  />
-
+                  <SlidersHorizontal size={19} className="text-[#a77a43]" />
                   <h2 className="font-serif text-xl text-[#351e23]">
                     Filters
                   </h2>
@@ -685,7 +805,8 @@ function CollectionsContent({
                 </h2>
 
                 <p className="mt-2 text-sm text-gray-500">
-                  Showing {filteredProducts.length} of {products.length} products
+                  Showing {filteredProducts.length} of {products.length}{" "}
+                  products
                 </p>
               </div>
 
@@ -703,25 +824,12 @@ function CollectionsContent({
                   </span>
                 )}
 
-                {selectedCategories.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full bg-[#f4ede4] px-3 py-2 text-xs text-[#632d35]"
-                  >
-                    {item}
-                  </span>
-                ))}
-
-                {selectedFabrics.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full bg-[#f4ede4] px-3 py-2 text-xs text-[#632d35]"
-                  >
-                    {item}
-                  </span>
-                ))}
-
-                {selectedColours.map((item) => (
+                {[
+                  ...selectedCategories,
+                  ...selectedFabrics,
+                  ...selectedWeaving,
+                  ...selectedColours,
+                ].map((item) => (
                   <span
                     key={item}
                     className="rounded-full bg-[#f4ede4] px-3 py-2 text-xs text-[#632d35]"
@@ -740,15 +848,15 @@ function CollectionsContent({
               </div>
             )}
 
-            {/* Reusable CardGrid */}
+            {/* Product Cards (shared component) */}
             {filteredProducts.length > 0 ? (
-              <CardGrid products={filteredProducts} />
+              <ProductCardGrid
+                products={filteredProducts}
+                gridClassName="grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
+              />
             ) : (
               <div className="bg-[#f4ede4] px-6 py-20 text-center">
-                <Search
-                  size={40}
-                  className="mx-auto text-[#a77a43]"
-                />
+                <Search size={40} className="mx-auto text-[#a77a43]" />
 
                 <h3 className="mt-5 font-serif text-2xl text-[#351e23]">
                   No Products Found
@@ -785,14 +893,8 @@ function CollectionsContent({
           <div className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-[#fffdf9] shadow-xl">
             <div className="flex items-center justify-between border-b border-[#eee5dc] p-5">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal
-                  size={19}
-                  className="text-[#a77a43]"
-                />
-
-                <h2 className="font-serif text-xl text-[#351e23]">
-                  Filters
-                </h2>
+                <SlidersHorizontal size={19} className="text-[#a77a43]" />
+                <h2 className="font-serif text-xl text-[#351e23]">Filters</h2>
               </div>
 
               <button
@@ -833,14 +935,12 @@ function CollectionsContent({
   );
 }
 
+// /collections?category=Silk%20Sarees opens with that category pre-selected.
 function CollectionsRouter() {
   const category = useSearchParams().get("category");
 
   return (
-    <CollectionsContent
-      key={category ?? "all"}
-      initialCategory={category}
-    />
+    <CollectionsContent key={category ?? "all"} initialCategory={category} />
   );
 }
 

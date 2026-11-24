@@ -11,8 +11,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 
-import { useCart } from "@/context/CartContext";
-import ProductCardGrid, { type ProductCardGridProduct } from "@/components/product/ProductCard";
+import ProductCardGrid from "@/components/product/ProductCard";
 
 type Product = {
   id: number;
@@ -119,19 +118,9 @@ const products: Product[] = [
 
 const categories = ["Silk Sarees", "Cotton Sarees", "Linen Sarees"];
 
-const fabrics = [
-  "Pure Silk",
-  "Cotton",
-  "Linen",
-  "Cotton Silk",
-  "Silk Blend",
-];
+const fabrics = ["Pure Silk", "Cotton", "Linen", "Cotton Silk", "Silk Blend"];
 
-const weavingTypes = [
-  "Traditional Handloom",
-  "Zari Weaving",
-  "Powerloom",
-];
+const weavingTypes = ["Traditional Handloom", "Zari Weaving", "Powerloom"];
 
 const colours = [
   { name: "Maroon", value: "#632d35" },
@@ -156,12 +145,9 @@ const colours = [
   { name: "Gold", value: "#c9a13c" },
 ];
 
-const formatPrice = (price: number) =>
-  `₹${price.toLocaleString("en-IN")}`;
+const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
 export default function NewArrivalsPage() {
-  const { addToCart } = useCart();
-
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedFabrics, setSelectedFabrics] = useState<string[]>([]);
@@ -297,16 +283,6 @@ export default function NewArrivalsPage() {
     sortBy,
   ]);
 
-  const handleAddToCart = (product: ProductCardGridProduct) => {
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      category: product.category,
-    });
-  };
-
   const FilterSection = ({
     title,
     children,
@@ -320,9 +296,7 @@ export default function NewArrivalsPage() {
         onClick={() => toggleSection(title)}
         className="flex w-full items-center justify-between text-left"
       >
-        <span className="text-sm font-semibold text-[#351e23]">
-          {title}
-        </span>
+        <span className="text-sm font-semibold text-[#351e23]">{title}</span>
 
         <ChevronDown
           size={17}
@@ -538,9 +512,7 @@ export default function NewArrivalsPage() {
 
           <span className="text-gray-400">/</span>
 
-          <span className="text-sm text-gray-600">
-            New Arrivals
-          </span>
+          <span className="text-sm text-gray-600">New Arrivals</span>
         </div>
       </section>
 
@@ -581,7 +553,6 @@ export default function NewArrivalsPage() {
             >
               <SlidersHorizontal size={17} />
               Filters
-
               {activeFilterCount > 0 && (
                 <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#632d35] px-1 text-[10px] text-white">
                   {activeFilterCount}
@@ -617,11 +588,7 @@ export default function NewArrivalsPage() {
             <div className="sticky top-24 border border-[#eee5dc] bg-white p-5">
               <div className="flex items-center justify-between border-b border-[#eee5dc] pb-5">
                 <div className="flex items-center gap-2">
-                  <SlidersHorizontal
-                    size={19}
-                    className="text-[#a77a43]"
-                  />
-
+                  <SlidersHorizontal size={19} className="text-[#a77a43]" />
                   <h2 className="font-serif text-xl text-[#351e23]">
                     Filters
                   </h2>
@@ -649,7 +616,8 @@ export default function NewArrivalsPage() {
                 </h2>
 
                 <p className="mt-2 text-sm text-gray-500">
-                  Showing {filteredProducts.length} of {products.length} new arrivals
+                  Showing {filteredProducts.length} of {products.length} new
+                  arrivals
                 </p>
               </div>
 
@@ -691,20 +659,15 @@ export default function NewArrivalsPage() {
               </div>
             )}
 
-            {/* Product Cards */}
+            {/* Product Cards (shared component) */}
             {filteredProducts.length > 0 ? (
               <ProductCardGrid
                 products={filteredProducts}
-                showWishlist
-                onAddToCart={handleAddToCart}
                 gridClassName="grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
               />
             ) : (
               <div className="bg-[#f4ede4] px-6 py-20 text-center">
-                <Search
-                  size={40}
-                  className="mx-auto text-[#a77a43]"
-                />
+                <Search size={40} className="mx-auto text-[#a77a43]" />
 
                 <h3 className="mt-5 font-serif text-2xl text-[#351e23]">
                   No New Arrivals Found
@@ -741,14 +704,8 @@ export default function NewArrivalsPage() {
           <div className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-[#fffdf9] shadow-xl">
             <div className="flex items-center justify-between border-b border-[#eee5dc] p-5">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal
-                  size={19}
-                  className="text-[#a77a43]"
-                />
-
-                <h2 className="font-serif text-xl text-[#351e23]">
-                  Filters
-                </h2>
+                <SlidersHorizontal size={19} className="text-[#a77a43]" />
+                <h2 className="font-serif text-xl text-[#351e23]">Filters</h2>
               </div>
 
               <button
